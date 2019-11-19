@@ -9,7 +9,7 @@ data3 = defaultdict(int)
 data2 = {}
    
 class UserCounter(APIView):
-    '''
+    
     def get(self, request, *args, **kwargs):
         throttle_classes = [AnonRateThrottle]
         
@@ -23,12 +23,7 @@ class UserCounter(APIView):
                     return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
             return Response(data2[self.kwargs['id']])
         return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
-        '''
-    def get(self, request, *args, **kwargs):
-          
-          data3[self.kwargs['id']] = {'counter':1}
-          serialer = testser(data3[self.kwargs['id']], self.kwargs['id'])
-          print(serialer)
+        
         
 
             
