@@ -15,11 +15,11 @@ class UserCounter(APIView):
         if self.kwargs['id'] <= 65535:
             if not self.kwargs['id'] in storage:
                 storage[self.kwargs['id']] = {'user_id': self.kwargs['id'],
-                                              'click': 1}
+                                              'counter': 1}
             else:
-                if storage[self.kwargs['id']]['click'] <= 1024:
-                    storage[self.kwargs['id']]['click'] += 1
+                if storage[self.kwargs['id']]['counter'] <= 1024:
+                    storage[self.kwargs['id']]['counter'] += 1
                 else:
                     return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
             return Response(storage[self.kwargs['id']])
-        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

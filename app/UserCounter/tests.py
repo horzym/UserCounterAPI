@@ -19,29 +19,29 @@ class PublicUserCounterApiTest(TestCase):
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
-    def testCountForBadUrl(self):
+    def testCountForBadUserId(self):
         user_id = 9999999
         url = reverse('user-counter', args=[user_id])
         res = self.client.get(url)
-        self.assertEqual(res.status_code, status.HTTP_501_NOT_IMPLEMENTED)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def testCountTooMuchGetAction(self):
+    def testCountTooManyRequest(self):
         user_id = 122
         url = reverse('user-counter', args=[user_id])
         for i in range(1, 10):
             res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_429_TOO_MANY_REQUESTS)
 
-    def testCorrectContent(self):
+    def testCheckCorrectContent(self):
         user_id = 122
         url = reverse('user-counter', args=[user_id])
         for i in range(0, 5):
             res = self.client.get(url)
             time.sleep(1)
-        self.assertEqual(res.data['click'], 5)
+        self.assertEqual(res.data['counter'], 5)
         payload = {
             "user_id": 122,
-            "click": 5
+            "counter": 5
         }
         self.assertEqual(res.data, payload)
 
@@ -52,3 +52,8 @@ class PublicUserCounterApiTest(TestCase):
             res = self.client.get(url)
             time.sleep(1)
         self.assertEqual(res.data['user_id'], user_id)
+
+    def testForUnCorrectURL(self):
+        url = 'localhost:8000/api/user/'
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
