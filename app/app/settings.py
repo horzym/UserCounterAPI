@@ -25,7 +25,7 @@ SECRET_KEY = '6rcbj^jxo+_e9fmrrv!7a)f%y=hgqys6%kf2yo2))5m!avd-bv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -124,9 +124,9 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '5/sec',
+        'user': '5/sec',
     }
 }

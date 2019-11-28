@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.throttling import AnonRateThrottle
+from rest_framework.throttling import UserRateThrottle
 
 
 storage = {}
@@ -9,7 +9,7 @@ storage = {}
 
 class UserCounter(APIView):
     """API View for user counter"""
-    throttle_classes = [AnonRateThrottle]
+    throttle_classes = [UserRateThrottle]
 
     def get(self, request, *args, **kwargs):
         if self.kwargs['id'] <= 65535:
